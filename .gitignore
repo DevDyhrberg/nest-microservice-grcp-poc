@@ -1,0 +1,64 @@
+# Yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# compiled output
+/dist
+/tmp_dist
+/node_modules
+
+# ENV files
+.env*
+*.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Google Service Account key
+# TODO: delete after everyone moved to .env variable
+google-storage-service-key.json
+
+# Ignore the Kubernetes secrets files
+k8s/secrets/*
+helm/secrets/*
+!helm/secrets/README.md
+helm/auth/*
+.vscode/tasks.json
+
+# npm registry
+.npmrc

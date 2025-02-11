@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package coreApi;
+
+service UsersService {
+  rpc CreateUser (CreateUserDto) returns (User) {}
+  rpc GetUsers (GetUsersDto) returns (Users) {}
+  rpc GetUser (GetUserDto) returns (User) {}
+  rpc UpdateUser (UpdateUserDto) returns (User) {}
+  rpc RemoveUser (GetUserDto) returns (User) {}
+  rpc QueryUsers (stream PaginationDto) returns (stream Users) {}
+}
+
+message Empty {};
+
+message PaginationDto {
+  int32 page = 1;
+  int32 skip = 2;
+}
+
+message GetUserDto {
+  string id = 1;
+}
+
+message GetUsersDto {
+  repeated GetUserDto ids = 1;
+}
+
+message CreateUserDto {
+  string email = 1;
+  string password = 2;
+  string countryCode = 3;
+  int32 age = 4;
+}
+
+message UpdateUserDto {
+  string id = 1;
+  string email = 2;
+  string password = 3;
+  string firstName = 4;
+  string lastName = 5;
+  string countryCode = 6;
+  int32 age = 7;
+  SocialMedia socialMedia = 8;
+}
+
+message User {
+  string id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string countryCode = 4;
+  int32 age = 5;
+  SocialMedia socialMedia = 6;
+}
+
+message Users {
+  repeated User users = 1;
+}
+
+message SocialMedia {
+  optional string facebookUri = 1;
+  optional string instagramUri = 2;
+  optional string tiktokUri = 3;
+  optional string youtubeUri = 4;
+}

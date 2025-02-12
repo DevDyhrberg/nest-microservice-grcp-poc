@@ -32,6 +32,7 @@ export class UsersService implements OnModuleInit {
       lastName: randomUUID(),
       socialMedia: {},
     };
+    console.log(user);
     this.users.push(user);
     return user;
   }
@@ -54,6 +55,10 @@ export class UsersService implements OnModuleInit {
     //     })
     //     .filter(Boolean),
     // };
+    return { users: this.users };
+  }
+
+  getAllUsers(): Users {
     return { users: this.users };
   }
 
@@ -86,7 +91,7 @@ export class UsersService implements OnModuleInit {
   }
 
   queryUsers(
-    paginationDtoStream: Observable<PaginationDto>,
+    paginationDtoStream: Observable<PaginationDto>
   ): Observable<Users> {
     const subject = new Subject<Users>();
 

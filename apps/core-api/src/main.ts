@@ -13,7 +13,7 @@ async function bootstrap() {
         protoPath: join(__dirname, '../core-api.proto'),
         package: CORE_API_PACKAGE_NAME,
       },
-    },
+    }
   );
   await app.listen();
 }

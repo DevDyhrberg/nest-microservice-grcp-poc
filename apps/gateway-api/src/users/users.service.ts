@@ -26,7 +26,9 @@ export class UsersService implements OnModuleInit {
   }
 
   getUsers() {
-    return this.usersService.getUsers({});
+    return this.usersService.getUsers({
+      ids: [],
+    });
   }
 
   getUser(id: string) {

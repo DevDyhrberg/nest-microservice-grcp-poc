@@ -4,6 +4,7 @@ package coreApi;
 
 service UsersService {
   rpc CreateUser (CreateUserDto) returns (User) {}
+  rpc GetAllUsers (Empty) returns (Users) {}
   rpc GetUsers (GetUsersDto) returns (Users) {}
   rpc GetUser (GetUserDto) returns (User) {}
   rpc UpdateUser (UpdateUserDto) returns (User) {}
@@ -23,6 +24,10 @@ message GetUserDto {
 }
 
 message GetUsersDto {
+  repeated GetUserDto ids = 1;
+}
+
+message GetAllUsersDto {
   repeated GetUserDto ids = 1;
 }
 

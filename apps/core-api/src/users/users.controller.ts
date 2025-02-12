@@ -23,6 +23,10 @@ export class UsersController implements UsersServiceController {
     return this.usersService.getUsers();
   }
 
+  getAllUsers() {
+    return this.usersService.getAllUsers();
+  }
+
   getUser(getUserDto: GetUserDto) {
     return this.usersService.getUser(getUserDto.id);
   }

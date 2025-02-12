@@ -1,0 +1,28 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type SocialMedia {
+  facebookUri: String
+  instagramUri: String
+  tiktokUri: String
+  youtubeUri: String
+}
+
+type User {
+  id: ID!
+  email: String!
+  countryCode: String!
+  age: Float!
+  firstName: String
+  lastName: String
+  socialMedia: SocialMedia
+}
+
+type Users {
+  users: [User!]!
+}
+
+type Query {
+  getAllUsers: Users!
+}

@@ -26,6 +26,10 @@ export interface GetUsersDto {
   ids: GetUserDto[];
 }
 
+export interface GetAllUsersDto {
+  ids: GetUserDto[];
+}
+
 export interface CreateUserDto {
   email: string;
   password: string;
@@ -69,6 +73,8 @@ export const CORE_API_PACKAGE_NAME = "coreApi";
 export interface UsersServiceClient {
   createUser(request: CreateUserDto): Observable<User>;
 
+  getAllUsers(request: Empty): Observable<Users>;
+
   getUsers(request: GetUsersDto): Observable<Users>;
 
   getUser(request: GetUserDto): Observable<User>;
@@ -83,6 +89,8 @@ export interface UsersServiceClient {
 export interface UsersServiceController {
   createUser(request: CreateUserDto): Promise<User> | Observable<User> | User;
 
+  getAllUsers(request: Empty): Promise<Users> | Observable<Users> | Users;
+
   getUsers(request: GetUsersDto): Promise<Users> | Observable<Users> | Users;
 
   getUser(request: GetUserDto): Promise<User> | Observable<User> | User;
@@ -96,7 +104,7 @@ export interface UsersServiceController {
 
 export function UsersServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["createUser", "getUsers", "getUser", "updateUser", "removeUser"];
+    const grpcMethods: string[] = ["createUser", "getAllUsers", "getUsers", "getUser", "updateUser", "removeUser"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("UsersService", method)(constructor.prototype[method], method, descriptor);

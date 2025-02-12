@@ -1,42 +1,48 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto, User } from '@app/common';
+import { Resolver, Query, Args, ID } from '@nestjs/graphql';
+import { Inject, OnModuleInit } from '@nestjs/common';
+import { ClientGrpc } from '@nestjs/microservices';
+import { map, Observable } from 'rxjs';
+import { User, Users } from './users.schema';
+import { USERS_SERVICE_NAME, UsersServiceClient } from '@app/common';
+import { CORE_API_SERVICE } from './constants';
 
-@Resolver('User')
-export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+@Resolver(() => User)
+export class UsersResolver implements OnModuleInit {
+  private usersService: UsersServiceClient;
 
-  @Mutation('createUser')
-  createUser(@Args('createUserInput') createUserInput: CreateUserDto) {
-    return this.usersService.create(createUserInput);
+  constructor(@Inject(CORE_API_SERVICE) private readonly client: ClientGrpc) {}
+
+  onModuleInit() {
+    this.usersService =
+      this.client.getService<UsersServiceClient>(USERS_SERVICE_NAME);
   }
 
-  @Query('users')
-  getUsers() {
-    return this.usersService.getUsers();
-  }
-
-  // @Query('user')
-  // findOne(@Args('id') id: number) {
-  //   return this.usersService.findOne(id);
+  // @Mutation(() => User)
+  // createUser(@Args('data') createUserInput: CreateUserInput): Observable<User> {
+  //   return this.usersService.createUser(createUserInput as any);
   // }
 
-  @Query('user')
-  async getUser(@Args('id') id: string): Promise<User> {
-    const user = await this.userLoader.load(id);
-    if (!user) {
-      throw new Error('User not found');
-    }
-    return user as User;
+  // @Query(() => Users)
+  // getUsers(
+  //   @Args('ids', { type: () => [ID] }) ids: string[]
+  // ): Observable<Users> {
+  //   return this.usersService.getUsers({ ids: ids.map((id) => ({ id })) }).pipe(
+  //     map((response) => ({
+  //       users: response.users.map((user) => ({
+  //         ...user,
+  //         email: (user as User).email || '', // Ensure email is present
+  //       })),
+  //     }))
+  //   );
+  // }
+
+  @Query(() => Users)
+  getAllUsers(): Observable<Users> {
+    return this.usersService.getAllUsers({});
   }
 
-  @Mutation('updateUser')
-  update(@Args('updateUserInput') updateUserInput: UpdateUserDto) {
-    return this.usersService.update(updateUserInput.id, updateUserInput);
-  }
-
-  @Mutation('removeUser')
-  remove(@Args('id') id: string) {
-    return this.usersService.remove(id);
-  }
+  // @Query(() => User)
+  // getUser(@Args('id', { type: () => ID }) id: string): Observable<User> {
+  //   return this.usersService.getUser({ id });
+  // }
 }
